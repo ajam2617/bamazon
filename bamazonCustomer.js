@@ -41,7 +41,7 @@ function preview() {
             );
         }
         console.log(table.toString());
-        restart();
+        manageItems(res);
 
     });
 };
@@ -75,7 +75,7 @@ function exit() {
 //could inclue a switch case to handle the various functions
 //Prompt user with ID of product they want to buy
 //Second question is quantity
-function manageItems() {
+function manageItems(res) {
     inquirer.prompt([
         {
             type: "input",
@@ -90,16 +90,30 @@ function manageItems() {
         }
     ]).then(function (answers) {
         //check against inventory numbers and either complete their order, or tell them it's not available/quantity insufficient
-        var userChoiceId = parseInt(answers.userItem);
-        var userHowMany = parseInt(answers.userQuantity);
-        var stockupdate = userChoiceId.stock_quantity - userHowMany;
-        if (stockupdate >= 0) {
-            connection.query('UPDATE products SET ? WHERE item_id = ?', [{ stock_quantity: stockupdate }, userChoiceId]);
-            restart();
-        } else {
-            console.log("Insufficient Quantity")
-            restart();
+        connection.query("SELECT * FROM products", function (err, res) {
+            if (err) throw err;
+            var userChoiceId = parseInt(answers.userItem);
+            var userHowMany = parseInt(answers.userQuantity);
+            var currentInventory;
+            var updatedInventory;
+            var itemPrice;
+            for (var i = 0; i < res.length; i++) {
+                if (userChoiceId === res[i].item_id) {
+                    currentInventory = res[i].stock_quantity;
+                    itemPrice = res[i].price;
+                }
+                if ((currentInventory - userHowMany) >= 0) {
+                    var updatedInventory = currentInventory - userHowMany;
+                    connection.query('UPDATE products SET ? WHERE item_id = ?', [{ stock_quantity: updatedInventory }, userChoiceId]);
+                    console.log("The Item costs: " + itemPrice + ". " + "Our Inventory is now updating.");
+                } else {
+                    console.log("Insufficient Quantity")
+                    restart();
+                }
+            }
         }
+        )
+
 
     })
 }
