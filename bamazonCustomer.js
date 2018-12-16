@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
 
     // Your password
     password: "password",
-    database: "emmysDB"
+    database: "bamazonDB"
 });
 
 connection.connect(function (err) {
@@ -24,7 +24,7 @@ connection.connect(function (err) {
 //will need a for loop to push table info to new Table visible in command line
 //ask the user what they would like to do
 function preview() {
-    connection.query("SELECT * FROM nominees", function (err, res) {
+    connection.query("SELECT * FROM products", function (err, res) {
         var table = new Table({
             chars: {
                 'top': '═', 'top-mid': '╤', 'top-left': '╔', 'top-right': '╗'
