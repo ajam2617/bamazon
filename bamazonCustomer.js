@@ -20,6 +20,7 @@ connection.connect(function (err) {
     if (err) throw err;
 });
 
+
 //grab a list of all items by creating new Table function expression
 //will need a for loop to push table info to new Table visible in command line
 //ask the user what they would like to do
@@ -56,7 +57,7 @@ function restart() {
     }]).then(function (answers) {
 
         if (answers.continue === "Yes") {
-            manageItems();
+            preview();
 
         } else {
             exit()
@@ -80,7 +81,7 @@ function manageItems(res) {
         {
             type: "input",
             name: "userItem",
-            message: "What is the ID of the item you would like to purchase?",
+            message: "\nWhat is the ID of the item you would like to purchase?",
 
         },
         {
@@ -102,15 +103,17 @@ function manageItems(res) {
                     currentInventory = res[i].stock_quantity;
                     itemPrice = res[i].price;
                 }
-                if ((currentInventory - userHowMany) >= 0) {
-                    var updatedInventory = currentInventory - userHowMany;
-                    connection.query('UPDATE products SET ? WHERE item_id = ?', [{ stock_quantity: updatedInventory }, userChoiceId]);
-                    console.log("The Item costs: " + itemPrice + ". " + "Our Inventory is now updating.");
-                } else {
-                    console.log("Insufficient Quantity")
-                    restart();
-                }
             }
+            if ((currentInventory - userHowMany) >= 0) {
+                var updatedInventory = currentInventory - userHowMany;
+                connection.query('UPDATE products SET ? WHERE item_id = ?', [{ stock_quantity: updatedInventory }, userChoiceId]);
+                console.log("The Item costs: " + itemPrice + ". " + "Our Inventory is now updating.");
+                restart();
+            } else {
+                console.log("Insufficient Quantity")
+                restart();
+            }
+
         }
         )
 
@@ -119,7 +122,3 @@ function manageItems(res) {
 }
 
 preview();
-
-
-
-
