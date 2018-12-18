@@ -5,10 +5,10 @@ CLI app of Amazon-like storefront with the MySQL. The app will take in orders fr
 # How It Works :nut_and_bolt: #
 ![bamazon GIF](/images/bamazon.gif)
 
-#Requirements#
+###Requirements###
 To run this app, you must do so in your _command line_ or _terminal_. You must also do an _npm install_ of _mysql_, _inquirer_, and _cli-table_.
 
-##Work-Flow ##
+####Work-Flow ####
 I started building the table of products first.
 ![mySQL Table](/images/mysql-products.JPG)
 
@@ -21,7 +21,7 @@ I began to input the important information about the dependencies and local host
 I grabbed user-input as to the choice of the product, and then began to write theory on how to manage the inventory updates to my table. I did spend a lot of time trying to compare the user-input to match the items in my table. I had a wild for-loop that console logged everything and did take me some time to debug. It was a simple solution of moving my console logs out of the loop. I was proud that my inventory was working early on. I wish I had more time to build the mamnager verion also. I feel confident I could complete that portion. 
 ![Inventory theory](/images/inventory-code.JPG)
 
-##To Do List ##
+######To Do List ######
 
 - [x] product table with colums names: item_id, product_name, department_name,  price, stock_quantity.
 - [x] Display table with 10 products
