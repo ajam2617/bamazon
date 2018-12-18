@@ -1,4 +1,4 @@
-#** :credit_card: bamazon :package: **#
+# :credit_card: bamazon :package: #
 
 CLI app of Amazon-like storefront with the MySQL. The app will take in orders from customers and deplete stock from the store's inventory. As a bonus task, you can program your app to track product sales across your store's departments and then provide a summary of the highest-grossing departments in the store. Currently I have the _Customer_ version working, but intended to get the _Manager_ and maybe even the _Supervisor_ version working.
 
